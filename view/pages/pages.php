@@ -1,0 +1,1 @@
+Nous sommes sur la page d'accueil des pages
