@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Dispatcher{
 
     var $request;
