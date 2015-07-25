@@ -41,13 +41,13 @@ Le dispatcher traite les requêtes et appelle le controleur donné pour qu'il ef
 	sauvegarde de la base de données du 9 mai 2015
 	
 *architect.architect
-	???????????????
+	permet de visualiser un modèle de la base de données
 
 *create_sondage_table
 	commande pour créer de nouvelle tables dans la base de données concernant les sondages.
 
 *google-site-verification: googled88115a2600518fc.html
-	????????????
+	Pour confirmer l'appartenance du site
 	
 *index.php
 	lance un readMyFile qui cartographie les fichiers contenus dans filesOld et tous les chemins.
@@ -62,20 +62,24 @@ Le dispatcher traite les requêtes et appelle le controleur donné pour qu'il ef
 	fichier permettant aux moteurs de recherche de connaitre facilement les champs d'adresse accessibles. Il s'agit d'une aide pour les robots d'indexation
 	
 *wb.mwb
-	??????????????
+	my sql work batch outil pour gérer les bases de données
+	
 /config
 *parametres.php
-	XXXXXXXXXXXXXXXX
 	contient les informations permettant d'accéder à la base de données par exemple...
 	
 /controller
 *AccueilController.php
-	contient une fonction index qui permet d'interroger la base de donner sur les derniers fichiers uploadésn le nombre de fichiers de membres c'est a dire les infos susceptibles d'être présentées sur la page d'accueil
+	gère toutes les requêtes accueil
+	contient une fonction index qui permet d'interroger la base de données sur les derniers fichiers uploadé sur le nombre de fichiers de membres c'est a dire les infos susceptibles d'être présentées sur la page d'accueil
 	
 *AjaxController.php
+	controller qui permet de rafraichir une partie du site.
+	ex: search file
 
 *CoursController.php
-
+	
+	
 *DownloadController.php
 
 *HomeController.php
