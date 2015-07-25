@@ -1,0 +1,163 @@
+===================================
+	Kitjambon
+===================================
+
+Site du kit jambon
+
+===================================
+	TODO
+===================================
+
+Finaliser l'arborescence des fichiers
+Formater le nom des fichiers
+Ajouter les fichiers de la nouvelle version (ceux qui ont été ajouter cette année)
+
+===================================
+	Questions
+===================================
+
+
+Pourquoi il y a des tables avec openu et d'autres sans ?
+
+DANS cfile.php
+Que veut dire $object ?
+Que veut dire $object['doc_'] ?
+basename($object);
+fileatime($object);
+filemtime($object);
+filesize($object); 
+
+===================================
+    Description fonctionnelle
+===================================
+
+Le dispatcher traite les requêtes et appelle le controleur donné pour qu'il effectue les tâches qui lui sont assignés.
+
+===================================
+     Description structurelle
+===================================
+
+*anthonynacderneyykitjam.sql
+	sauvegarde de la base de données du 9 mai 2015
+	
+*architect.architect
+	???????????????
+
+*create_sondage_table
+	commande pour créer de nouvelle tables dans la base de données concernant les sondages.
+
+*google-site-verification: googled88115a2600518fc.html
+	????????????
+	
+*index.php
+	lance un readMyFile qui cartographie les fichiers contenus dans filesOld et tous les chemins.
+	
+*liste.txt
+	Liste des cours et de leurs abréviations
+	
+*README.md
+	affiche toutes les infos sur le projet
+	
+*sitemap.xml
+	fichier permettant aux moteurs de recherche de connaitre facilement les champs d'adresse accessibles. Il s'agit d'une aide pour les robots d'indexation
+	
+*wb.mwb
+	??????????????
+/config
+*parametres.php
+	XXXXXXXXXXXXXXXX
+	contient les informations permettant d'accéder à la base de données par exemple...
+	
+/controller
+*AccueilController.php
+	contient une fonction index qui permet d'interroger la base de donner sur les derniers fichiers uploadésn le nombre de fichiers de membres c'est a dire les infos susceptibles d'être présentées sur la page d'accueil
+	
+*AjaxController.php
+
+*CoursController.php
+
+*DownloadController.php
+
+*HomeController.php
+
+*MembreController.php
+
+*PagesController.php
+
+*PetitionController.php
+
+*SondageController.php
+
+*UploadController.php
+
+
+/core
+*cfile.php
+	contient les fonctions qui permettent de gérer les fichiers qui ne sont pas dans la base de données
+
+*controller.php
+	definit la classe controller dont hérite la plupart des controllers. génére la page html, le menu ...
+CLASSE A CREUSER POUR COMPRENDRE LA LIAISON AVEC LES VIEW
+
+*dispatcher.php
+	gère les requêtes et les redirige vers les controller
+	
+*fonctions.php
+
+*includes.php
+
+*mail.php
+
+*model.php
+
+*request.php
+
+*router.php
+
+*scripts.php
+
+*session.php
+
+*urls.php
+
+
+/model
+*contact_membre.php
+
+*document.php
+
+*groupe.php
+
+*history.php
+
+*membre.php
+
+*reseau.php
+
+*sondage.php
+
+
+/openupload
+
+
+/view
+
+	
+/webroot
+
+
+===================================
+	Erreurs
+===================================
+
+Attention dans le code de la page d'accueil </br> au lieu de <br/>
+Dans cfile.php ReadMyfile, dans le while !== au lieu de !=
+Dans cfile.php ReadMyfile, $base ne sert à rien.
+
+===================================
+	Message Facebook
+===================================
+Cc les jambons,  
+Avec un trafic mensuel moyen entre 3 et 5 Go, le site est bien lancé maintenant, et ce, grâce à vous. 
+Cependant, la majorité des fichiers actuels ne sont pas très récents. Nous pensons qu'il est donc temps de donner une nouvelle fraîcheur au site.
+Pour ce faire, nous vous recommandons d'uploader les fichiers que vous souhaitez partager. 
