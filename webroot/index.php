@@ -9,7 +9,7 @@
     
 /* Fichier d'inclusions */
     include_once CORE.DS.'includes.php';
-    
+
 /* Lancement de l'application */
     $dispatcher = new Dispatcher;
 

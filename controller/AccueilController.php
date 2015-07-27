@@ -25,7 +25,6 @@
                 'conditions' => 'mem_etat = 1',
                 'fecthMethod' => PDO::FETCH_ASSOC
             ));  
-            var_dump($data['nbMembre']);
 
             $data['nbReseau'] = $this->reseau->findFirst(array(
                 'champs' => 'DISTINCT COUNT(net_id) as nbReseau',

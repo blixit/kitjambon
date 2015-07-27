@@ -10,7 +10,7 @@ Site du kit jambon
 
 Finaliser l'arborescence des fichiers
 Formater le nom des fichiers
-Ajouter les fichiers de la nouvelle version (ceux qui ont été ajouter cette année)
+Ajouter les fichiers de la nouvelle version (ceux qui ont été ajoutés cette année)
 
 ===================================
 	Questions
@@ -21,17 +21,25 @@ Pourquoi il y a des tables avec openu et d'autres sans ?
 
 DANS cfile.php
 Que veut dire $object ?
+contient le chemin d'un fichier
 Que veut dire $object['doc_'] ?
+renvoie la colonne indicé par 'doc_'
 basename($object);
+renvoie le nom d'un fichier dans un chemin
 fileatime($object);
+renvoie la date de dernier acces d'un fichier
 filemtime($object);
+renvoie la date de derniere modification d'un fichier
 filesize($object); 
+renvoie la taille d'un fichier
 
 ===================================
     Description fonctionnelle
 ===================================
 
-Le dispatcher traite les requêtes et appelle le controleur donné pour qu'il effectue les tâches qui lui sont assignés.
+On définit les paramètres.
+On définit toutes les classes
+On crée une instance du dispatcher qui se charge d'appeler le bon controller
 
 ===================================
      Description structurelle
