@@ -17,8 +17,8 @@
 			<div id="jumbotron" class="jumbotron">
 			  <h2><?php echo constant('site_i_slogan'); ?></h2>
 			  	<p><span class="site_description"> 
-				  Ce site est une plateforme de téléchargement/upload gratuite.</br>
-				  N'hésitez pas à uploader vos fichiers afin d'aggrandir la base de données.</br> 
+				  Ce site est une plateforme de téléchargement/upload gratuite.<br/>
+				  N'hésitez pas à uploader vos fichiers afin d'aggrandir la base de données.<br/> 
 				</span> 
 				</p>
 				
@@ -27,8 +27,8 @@
 				</p>
 				<div class="row">
 				<ul>
-					<li><span style="font-size: 15px;"><?php echo $nbMembre; ?> membres</span></li>
-					<li><span style="font-size: 15px;"><?php echo $nbReseau; ?> répertoires de cours</span></li>
+					<li><span style="font-size: 15px;"><?php echo $nbMembre['nbMembre']; ?> membres</span></li>
+					<li><span style="font-size: 15px;"><?php echo $nbReseau['nbReseau']; ?> répertoires de cours</span></li>
 					<!--<li><span style="font-size: 15px;"><?php //echo $nbGroupe; ?> groupes de travail</span></li>-->
 					<li><span style="font-size: 15px;">Plus de 2 Go de documents </span></li>
 					<!--
@@ -57,7 +57,7 @@
 				</div>
 
 				</section>
-				</br>
+				<br/>
 				<p>
 				<span class="label label-default">Javascript et Mozilla Firefox</span>
 				</p>
@@ -66,7 +66,7 @@
 					une meilleure utilisation de ce site, pensez à activer Javascript ou à changer de navigateur 
 					(Ex : Chrome, Safari, ...).
 				</div>
-				</br>
+				<br/>
 				<p>
 				<span class="label label-default">Inscription par parrainage</span>
 				</p>
@@ -74,7 +74,7 @@
 					Désormais il vous est possible d'inviter un ami à rejoindre le kit jambon. Pour cela,
 					cliquer sur le lien 'Parrainer un nouveau' sur votre <a href="<?php echo Router::url('?home/profil/#lien_parrainage'); ?>">page de profil</a>.
 				</div>
-				</br>
+				<br/>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<div class="panel panel-warning">
@@ -86,7 +86,7 @@
 					  Vous êtes à la recherche d'un kit inexistant,
 					  vous souhaitez poser des questions concernant les modules,
 					  la communauté est là pour vous soutenir.
-					  </br>
+					  <br/>
 					  <a href="<?php echo constant('site_i_facebook'); ?>">
 					  <button type="button" class="btn btn-warning pull-right"> Go ! </button>
 					  </a>
@@ -102,7 +102,7 @@
 					  Tu souhaites partager une infos canon sur la préparation d'un ds,
 					  tu veux partager ta façon de résoudre un exercice,
 					  sens-toi libre, t'es un jambonneur.
-					  </br>
+					  <br/>
 					  <a href="<?php echo constant('site_i_facebook'); ?>">
 					  <button type="button" class="btn btn-success pull-right"> Go ! </button>
 					  </a>
@@ -120,10 +120,10 @@
 					  Tu es à la recherche d'un ou plusieurs partenaires de travail,
 					  un jambonneur sympatique avec les mêmes centres d'intérets que toi,
 					  des potes pour former un groupe de travail, c'est par ici.
-					  </br>
+					  <br/>
 					  Une fois ton annonce posée, tu pourras voir celle de ceux qui partage
 					  tes centres d'intérêts.
-					  </br>
+					  <br/>
 					  <a href="<?php echo Router::url('?home/'); ?>">
 					  <button type="button" class="btn btn-warning pull-right"> Go ! </button>
 					  </a>
@@ -134,7 +134,7 @@
 			<div class="row centered">
 				<div class="fb-activity" data-site="<?php echo constant('site_i_url'); ?>" data-action="likes, recommends"
 				data-colorscheme="light" data-header="true" data-width="300"></div>
-				</br></br>
+				<br/><br/>
 		   </div>
 		</div>
 		<div class="col-xs-12 col-sm-4">
@@ -163,7 +163,7 @@
 									echo '(EI'.$value['year'].'-'.$value['ue'].') '.substr($value['name'],0,30).'... ';
 								else
 									echo '(EI'.$value['year'].'-'.$value['ue'].') '.$value['name']; 
-								echo '</br>';
+								echo '<br/>';
 							}						 		
 						} 
 					?> 
@@ -197,13 +197,13 @@
 				<div class="fb-like-box" data-href="<?php echo constant('site_i_facebook'); ?>" data-colorscheme="light"
 			data-show-faces="true" data-header="true" data-stream="false" data-show-border="true" data-width="300" ></div>
 			</div>
-			</br>
+			<br/>
 			<div class="">
 				<?php //include_once $_DIR."composants/mod_sondage.php"; ?>
 			</div>
 		</div>
 	</div>
-       </br>
+       <br/>
 	   <section>
 	   <div class="row">
 

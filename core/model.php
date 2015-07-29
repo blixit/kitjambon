@@ -17,7 +17,9 @@ class Model {
                     $this->db = Model::$connections[$this->dbname];
                     return true;
             }
+
             try{
+            	                                   
                     $pdo = new PDO('mysql:host='.$c['db_host'].';dbname='.$c['db_name'].'',
                                     $c['db_user'],
                                     $c['db_pass'],
@@ -26,10 +28,13 @@ class Model {
                                             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
                                             )
                     );
+                    //var_dump($pdo); //il y a une erreur sur la creation de l'instance PDO si le nom de la base de donnée est mauvais
                     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
                     Model::$connections[$this->dbname] = $pdo;
                     $this->db = $pdo;
-            }
+                    //echo "valeur de db"; var_dump($this->db); echo "fin de valeur de db";
+                    return array(true,'');
+            } 
             catch (PDOException $e){
                     $erreur =  $e->getMessage();
                     if(Conf::DEBUG)
@@ -37,7 +42,7 @@ class Model {
                     else
                             return array(false,"Impossible de se connecter à la base de donnée.");
             }
-            return array(true,'');
+            
     }
     public function find($req=null){
             $sql = 'SELECT ';
@@ -71,6 +76,7 @@ class Model {
                             $sql .= $req['limit'];
             }
             //echo get_class($this)."::".$sql.'<br>';
+            //Si il y a une erreur sur la ligne suivante, pensez à vérifier dans parametres.php dans la classe Conf et dans la variable $db le nom de la base de données et l'utilisateur. Il doit aussi avoir les droits pour y accéder.
             $q = $this->db->prepare($sql);
             try{
                     $q->execute();
