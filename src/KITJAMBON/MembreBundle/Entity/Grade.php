@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Grade
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_grade")
  * @ORM\Entity(repositoryClass="KITJAMBON\MembreBundle\Entity\GradeRepository")
  */
 class Grade
@@ -17,6 +17,8 @@ class Grade
      * @var integer
      *
      * @ORM\Column(name="grade_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $gradeId;
 

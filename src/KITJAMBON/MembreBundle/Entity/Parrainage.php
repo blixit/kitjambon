@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Parrainage
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_parrainage")
  * @ORM\Entity(repositoryClass="KITJAMBON\MembreBundle\Entity\ParrainageRepository")
  */
 class Parrainage
@@ -17,6 +17,8 @@ class Parrainage
      * @var integer
      *
      * @ORM\Column(name="parrainage_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $parrainageId;
 

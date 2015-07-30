@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Signalement
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_signalement")
  * @ORM\Entity(repositoryClass="KITJAMBON\MembreBundle\Entity\SignalementRepository")
  */
 class Signalement
@@ -17,6 +17,8 @@ class Signalement
      * @var integer
      *
      * @ORM\Column(name="signalement_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $signalementId;
 

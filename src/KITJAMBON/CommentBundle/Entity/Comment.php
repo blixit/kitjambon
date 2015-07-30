@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comment
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_comment")
  * @ORM\Entity(repositoryClass="KITJAMBON\CommentBundle\Entity\CommentRepository")
  */
 class Comment
@@ -17,6 +17,8 @@ class Comment
      * @var integer
      *
      * @ORM\Column(name="comment_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $commentId;
 

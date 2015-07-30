@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * File
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_file")
  * @ORM\Entity(repositoryClass="KITJAMBON\TransfertBundle\Entity\FileRepository")
  */
 class File
@@ -17,6 +17,8 @@ class File
      * @var integer
      *
      * @ORM\Column(name="file_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $fileId;
 

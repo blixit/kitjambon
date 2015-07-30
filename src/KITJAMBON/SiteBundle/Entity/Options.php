@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Options
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_options")
  * @ORM\Entity(repositoryClass="KITJAMBON\SiteBundle\Entity\OptionsRepository")
  */
 class Options
@@ -17,6 +17,8 @@ class Options
      * @var integer
      *
      * @ORM\Column(name="option_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $optionId;
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Transfert
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_transfert")
  * @ORM\Entity(repositoryClass="KITJAMBON\TransfertBundle\Entity\TransfertRepository")
  */
 class Transfert
@@ -17,6 +17,8 @@ class Transfert
      * @var integer
      *
      * @ORM\Column(name="transfert_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $transfertId;
 

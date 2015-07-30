@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Option_Membre
  *
- * @ORM\Table()
+ * @ORM\Table(name="kj_option_membre")
  * @ORM\Entity(repositoryClass="KITJAMBON\MembreBundle\Entity\Option_MembreRepository")
  */
 class Option_Membre
@@ -17,6 +17,7 @@ class Option_Membre
      * @var integer
      *
      * @ORM\Column(name="option_id", type="integer")
+     * @ORM\Id 
      */
     private $optionId;
 
@@ -24,9 +25,10 @@ class Option_Membre
      * @var integer
      *
      * @ORM\Column(name="membre_id", type="integer")
+     * @ORM\Id 
      */
     private $membreId;
-    
+
 
     /**
      * Set optionId
