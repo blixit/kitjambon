@@ -1,0 +1,3 @@
+kitjambon_transfert_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KITJAMBONTransfertBundle:Default:index }

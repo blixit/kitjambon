@@ -1,0 +1,3 @@
+kitjambon_membre_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KITJAMBONMembreBundle:Default:index }

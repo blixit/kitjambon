@@ -18,6 +18,9 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new nacder\PlatformBundle\nacderPlatformBundle(),
             new KITJAMBON\SiteBundle\KITJAMBONSiteBundle(),
+            new KITJAMBON\MembreBundle\KITJAMBONMembreBundle(),
+            new KITJAMBON\TransfertBundle\KITJAMBONTransfertBundle(),
+            new KITJAMBON\CommentBundle\KITJAMBONCommentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

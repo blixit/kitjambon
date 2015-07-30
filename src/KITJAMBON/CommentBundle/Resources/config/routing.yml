@@ -1,0 +1,3 @@
+kitjambon_comment_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KITJAMBONCommentBundle:Default:index }

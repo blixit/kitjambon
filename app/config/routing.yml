@@ -1,3 +1,15 @@
+kitjambon_comment:
+    resource: "@KITJAMBONCommentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+kitjambon_transfert:
+    resource: "@KITJAMBONTransfertBundle/Resources/config/routing.yml"
+    prefix:   /
+
+kitjambon_membre:
+    resource: "@KITJAMBONMembreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 kitjambon_site:
     resource: "@KITJAMBONSiteBundle/Resources/config/routing.yml"
     prefix:   /

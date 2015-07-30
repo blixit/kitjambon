@@ -698,8 +698,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
-        $a = new \Doctrine\Common\Cache\ArrayCache();
-        $a->setNamespace('sf2orm_default_da43f632636d1e32c1be0ccf7b7258ad07ff7cac5b8c921a399aa16c83201b79');
+        $a = $this->get('annotation_reader');
 
         $b = new \Doctrine\Common\Cache\ArrayCache();
         $b->setNamespace('sf2orm_default_da43f632636d1e32c1be0ccf7b7258ad07ff7cac5b8c921a399aa16c83201b79');
@@ -707,20 +706,31 @@ class appDevDebugProjectContainer extends Container
         $c = new \Doctrine\Common\Cache\ArrayCache();
         $c->setNamespace('sf2orm_default_da43f632636d1e32c1be0ccf7b7258ad07ff7cac5b8c921a399aa16c83201b79');
 
-        $d = new \Doctrine\ORM\Configuration();
-        $d->setEntityNamespaces(array());
-        $d->setMetadataCacheImpl($a);
-        $d->setQueryCacheImpl($b);
-        $d->setResultCacheImpl($c);
-        $d->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DriverChain());
-        $d->setProxyDir('C:/wamp/www/Symfony/app/cache/dev/doctrine/orm/Proxies');
-        $d->setProxyNamespace('Proxies');
-        $d->setAutoGenerateProxyClasses(true);
-        $d->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
-        $d->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
-        $d->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
+        $d = new \Doctrine\Common\Cache\ArrayCache();
+        $d->setNamespace('sf2orm_default_da43f632636d1e32c1be0ccf7b7258ad07ff7cac5b8c921a399aa16c83201b79');
 
-        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $d);
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\SiteBundle\\Entity', 1 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\MembreBundle\\Entity', 2 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\TransfertBundle\\Entity', 3 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\CommentBundle\\Entity'));
+
+        $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $f->addDriver($e, 'KITJAMBON\\SiteBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\MembreBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\TransfertBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\CommentBundle\\Entity');
+
+        $g = new \Doctrine\ORM\Configuration();
+        $g->setEntityNamespaces(array('KITJAMBONSiteBundle' => 'KITJAMBON\\SiteBundle\\Entity', 'KITJAMBONMembreBundle' => 'KITJAMBON\\MembreBundle\\Entity', 'KITJAMBONTransfertBundle' => 'KITJAMBON\\TransfertBundle\\Entity', 'KITJAMBONCommentBundle' => 'KITJAMBON\\CommentBundle\\Entity'));
+        $g->setMetadataCacheImpl($b);
+        $g->setQueryCacheImpl($c);
+        $g->setResultCacheImpl($d);
+        $g->setMetadataDriverImpl($f);
+        $g->setProxyDir('C:/wamp/www/Symfony/app/cache/dev/doctrine/orm/Proxies');
+        $g->setProxyNamespace('Proxies');
+        $g->setAutoGenerateProxyClasses(true);
+        $g->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+        $g->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
+        $g->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
+
+        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $g);
 
         $this->get('doctrine.orm.default_manager_configurator')->configure($instance);
 
@@ -3095,6 +3105,9 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\doctrine\\doctrine-bundle\\Doctrine\\Bundle\\DoctrineBundle/Resources/views', 'Doctrine');
         $instance->addPath('C:\\wamp\\www\\Symfony\\src\\nacder\\PlatformBundle/Resources/views', 'nacderPlatform');
         $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\SiteBundle/Resources/views', 'KITJAMBONSite');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\MembreBundle/Resources/views', 'KITJAMBONMembre');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\TransfertBundle/Resources/views', 'KITJAMBONTransfert');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\CommentBundle/Resources/views', 'KITJAMBONComment');
         $instance->addPath('C:\\wamp\\www\\Symfony\\src\\Acme\\DemoBundle/Resources/views', 'AcmeDemo');
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\sensio\\distribution-bundle\\Sensio\\Bundle\\DistributionBundle/Resources/views', 'SensioDistribution');
@@ -3600,6 +3613,9 @@ class appDevDebugProjectContainer extends Container
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'nacderPlatformBundle' => 'nacder\\PlatformBundle\\nacderPlatformBundle',
                 'KITJAMBONSiteBundle' => 'KITJAMBON\\SiteBundle\\KITJAMBONSiteBundle',
+                'KITJAMBONMembreBundle' => 'KITJAMBON\\MembreBundle\\KITJAMBONMembreBundle',
+                'KITJAMBONTransfertBundle' => 'KITJAMBON\\TransfertBundle\\KITJAMBONTransfertBundle',
+                'KITJAMBONCommentBundle' => 'KITJAMBON\\CommentBundle\\KITJAMBONCommentBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
