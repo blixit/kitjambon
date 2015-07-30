@@ -1,0 +1,8 @@
+nacder_platform_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: nacderPlatformBundle:Default:index }
+    requirements:
+      name: claude
+nacder_plateform_accueil:
+    path:     /platform/accueil/
+    defaults: { _controller: nacderPlatformBundle:Accueil:index}

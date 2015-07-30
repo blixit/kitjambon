@@ -1,0 +1,8 @@
+kitjambon_site:
+    resource: "@KITJAMBONSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+nacder_platform:
+    resource: "@nacderPlatformBundle/Resources/config/routing.yml"
+    prefix:   /
+

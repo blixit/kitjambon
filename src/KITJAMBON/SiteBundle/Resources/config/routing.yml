@@ -1,0 +1,9 @@
+kitjambon_site_accueil:
+    path:     /
+    defaults: { _controller: KITJAMBONSiteBundle:Default:index }
+kitjambon_site_accueil2:
+    path:     /accueil/*
+    defaults: { _controller: KITJAMBONSiteBundle:Accueil:index} 
+kitjambon_site_presentation:
+    path:     /accueil/persentation/
+    defaults: { _controller: KITJAMBONSiteBundle:Accueil:index}
