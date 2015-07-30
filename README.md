@@ -5,6 +5,13 @@
 Site du kit jambon
 
 ===================================
+	Contributeurs
+===================================
+
+Auteur : Alain NGANGOUE
+Collaborateur : Nicolas ANTOINE
+
+===================================
 	TODO
 ===================================
 
