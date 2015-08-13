@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new KITJAMBON\MembreBundle\KITJAMBONMembreBundle(),
             new KITJAMBON\TransfertBundle\KITJAMBONTransfertBundle(),
             new KITJAMBON\CommentBundle\KITJAMBONCommentBundle(),
+            new KJ\SiteBundle\KJSiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

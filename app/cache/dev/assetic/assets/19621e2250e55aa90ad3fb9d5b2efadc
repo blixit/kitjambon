@@ -1,0 +1,4 @@
+//CONTOURNER ADBLOCS
+alert('IN');
+document.write('<div id="ads_bottom" style="display: none; width: 100px; height: 100px;">OEOEOEOEOE
+	<img style="width:400px; height:300px" /></div>');

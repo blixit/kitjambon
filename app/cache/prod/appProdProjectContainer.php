@@ -27,6 +27,7 @@ class appProdProjectContainer extends Container
             'assetic.asset_manager' => 'getAssetic_AssetManagerService',
             'assetic.filter.cssrewrite' => 'getAssetic_Filter_CssrewriteService',
             'assetic.filter_manager' => 'getAssetic_FilterManagerService',
+            'assetic.helper.static' => 'getAssetic_Helper_StaticService',
             'cache_clearer' => 'getCacheClearerService',
             'cache_warmer' => 'getCacheWarmerService',
             'controller_name_converter' => 'getControllerNameConverterService',
@@ -90,6 +91,7 @@ class appProdProjectContainer extends Container
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'http_kernel' => 'getHttpKernelService',
             'kernel' => 'getKernelService',
+            'kitjambon_membre.arfilter' => 'getKitjambonMembre_ArfilterService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
             'monolog.handler.console' => 'getMonolog_Handler_ConsoleService',
@@ -148,6 +150,8 @@ class appProdProjectContainer extends Container
             'swiftmailer.mailer.default.transport.real' => 'getSwiftmailer_Mailer_Default_Transport_RealService',
             'templating' => 'getTemplatingService',
             'templating.asset.package_factory' => 'getTemplating_Asset_PackageFactoryService',
+            'templating.engine.php' => 'getTemplating_Engine_PhpService',
+            'templating.engine.twig' => 'getTemplating_Engine_TwigService',
             'templating.filename_parser' => 'getTemplating_FilenameParserService',
             'templating.globals' => 'getTemplating_GlobalsService',
             'templating.helper.actions' => 'getTemplating_Helper_ActionsService',
@@ -233,8 +237,12 @@ class appProdProjectContainer extends Container
     }
     protected function getAssetic_AssetManagerService()
     {
-        $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('C:/wamp/www/Symfony/app/cache/prod/assetic/config'), false)));
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($this->get('templating.loader'), '', 'C:/wamp/www/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $a = $this->get('assetic.asset_factory');
+        $b = $this->get('templating.loader');
+        $c = new \Assetic\Cache\ConfigCache('C:/wamp/www/Symfony/app/cache/prod/assetic/config');
+        $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($a, array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), $c, false), 'php' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader($a), $c, false)));
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, '', 'C:/wamp/www/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, '', 'C:/wamp/www/Symfony/app/Resources/views', '/\\.[^.]+\\.php$/'), 'php');
         return $instance;
     }
     protected function getAssetic_Filter_CssrewriteService()
@@ -244,6 +252,13 @@ class appProdProjectContainer extends Container
     protected function getAssetic_FilterManagerService()
     {
         return $this->services['assetic.filter_manager'] = new \Symfony\Bundle\AsseticBundle\FilterManager($this, array('cssrewrite' => 'assetic.filter.cssrewrite'));
+    }
+    protected function getAssetic_Helper_StaticService()
+    {
+        if (!isset($this->scopedServices['request'])) {
+            throw new InactiveScopeException('assetic.helper.static', 'request');
+        }
+        return $this->services['assetic.helper.static'] = $this->scopedServices['request']['assetic.helper.static'] = new \Symfony\Bundle\AsseticBundle\Templating\StaticAsseticHelper($this->get('templating.helper.assets'), $this->get('assetic.asset_factory'));
     }
     protected function getCacheClearerService()
     {
@@ -270,29 +285,36 @@ class appProdProjectContainer extends Container
     }
     protected function getDoctrine_Dbal_DefaultConnectionService()
     {
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => NULL, 'dbname' => 'symfony', 'user' => 'root', 'password' => NULL, 'charset' => 'UTF8', 'driverOptions' => array()), new \Doctrine\DBAL\Configuration(), new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => 'localhost', 'port' => NULL, 'dbname' => 'symfonykitjam', 'user' => 'root', 'password' => NULL, 'charset' => 'UTF8', 'driverOptions' => array()), new \Doctrine\DBAL\Configuration(), new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
     }
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
-        $a = new \Doctrine\Common\Cache\ArrayCache();
-        $a->setNamespace('sf2orm_default_c2c5044e77304f0e0c08f50f79327e6f316080fd1bf0f31c724bdcdb0bf24270');
+        $a = $this->get('annotation_reader');
         $b = new \Doctrine\Common\Cache\ArrayCache();
         $b->setNamespace('sf2orm_default_c2c5044e77304f0e0c08f50f79327e6f316080fd1bf0f31c724bdcdb0bf24270');
         $c = new \Doctrine\Common\Cache\ArrayCache();
         $c->setNamespace('sf2orm_default_c2c5044e77304f0e0c08f50f79327e6f316080fd1bf0f31c724bdcdb0bf24270');
-        $d = new \Doctrine\ORM\Configuration();
-        $d->setEntityNamespaces(array());
-        $d->setMetadataCacheImpl($a);
-        $d->setQueryCacheImpl($b);
-        $d->setResultCacheImpl($c);
-        $d->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DriverChain());
-        $d->setProxyDir('C:/wamp/www/Symfony/app/cache/prod/doctrine/orm/Proxies');
-        $d->setProxyNamespace('Proxies');
-        $d->setAutoGenerateProxyClasses(false);
-        $d->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
-        $d->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
-        $d->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
-        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $d);
+        $d = new \Doctrine\Common\Cache\ArrayCache();
+        $d->setNamespace('sf2orm_default_c2c5044e77304f0e0c08f50f79327e6f316080fd1bf0f31c724bdcdb0bf24270');
+        $e = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\SiteBundle\\Entity', 1 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\MembreBundle\\Entity', 2 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\TransfertBundle\\Entity', 3 => 'C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\CommentBundle\\Entity'));
+        $f = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $f->addDriver($e, 'KITJAMBON\\SiteBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\MembreBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\TransfertBundle\\Entity');
+        $f->addDriver($e, 'KITJAMBON\\CommentBundle\\Entity');
+        $g = new \Doctrine\ORM\Configuration();
+        $g->setEntityNamespaces(array('KITJAMBONSiteBundle' => 'KITJAMBON\\SiteBundle\\Entity', 'KITJAMBONMembreBundle' => 'KITJAMBON\\MembreBundle\\Entity', 'KITJAMBONTransfertBundle' => 'KITJAMBON\\TransfertBundle\\Entity', 'KITJAMBONCommentBundle' => 'KITJAMBON\\CommentBundle\\Entity'));
+        $g->setMetadataCacheImpl($b);
+        $g->setQueryCacheImpl($c);
+        $g->setResultCacheImpl($d);
+        $g->setMetadataDriverImpl($f);
+        $g->setProxyDir('C:/wamp/www/Symfony/app/cache/prod/doctrine/orm/Proxies');
+        $g->setProxyNamespace('Proxies');
+        $g->setAutoGenerateProxyClasses(false);
+        $g->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+        $g->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
+        $g->setNamingStrategy(new \Doctrine\ORM\Mapping\DefaultNamingStrategy());
+        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $g);
         $this->get('doctrine.orm.default_manager_configurator')->configure($instance);
         return $instance;
     }
@@ -545,6 +567,10 @@ class appProdProjectContainer extends Container
     {
         throw new RuntimeException('You have requested a synthetic service ("kernel"). The DIC does not know how to construct this service.');
     }
+    protected function getKitjambonMembre_ArfilterService()
+    {
+        return $this->services['kitjambon_membre.arfilter'] = new \KITJAMBON\MembreBundle\Services\KITJAMBONARFilter();
+    }
     protected function getLocaleListenerService()
     {
         return $this->services['locale_listener'] = new \Symfony\Component\HttpKernel\EventListener\LocaleListener('en', $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('request_stack'));
@@ -795,8 +821,9 @@ class appProdProjectContainer extends Container
     }
     protected function getTemplatingService()
     {
-        $this->services['templating'] = $instance = new \Symfony\Bundle\TwigBundle\TwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.locator'));
-        $instance->setDefaultEscapingStrategy(array(0 => $instance, 1 => 'guessDefaultEscapingStrategy'));
+        $this->services['templating'] = $instance = new \Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine($this, array());
+        $instance->addEngine($this->get('templating.engine.twig'));
+        $instance->addEngine($this->get('templating.engine.php'));
         return $instance;
     }
     protected function getTemplating_Asset_PackageFactoryService()
@@ -828,10 +855,7 @@ class appProdProjectContainer extends Container
     }
     protected function getTemplating_Helper_FormService()
     {
-        $a = new \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('templating.globals'));
-        $a->setCharset('UTF-8');
-        $a->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.static'));
-        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper(new \Symfony\Component\Form\FormRenderer(new \Symfony\Component\Form\Extension\Templating\TemplatingRendererEngine($a, array(0 => 'FrameworkBundle:Form')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper(new \Symfony\Component\Form\FormRenderer(new \Symfony\Component\Form\Extension\Templating\TemplatingRendererEngine($this->get('templating.engine.php'), array(0 => 'FrameworkBundle:Form')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
     }
     protected function getTemplating_Helper_LogoutUrlService()
     {
@@ -1047,6 +1071,11 @@ class appProdProjectContainer extends Container
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\TwigBundle/Resources/views', 'Twig');
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\symfony\\swiftmailer-bundle\\Symfony\\Bundle\\SwiftmailerBundle/Resources/views', 'Swiftmailer');
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\doctrine\\doctrine-bundle\\Doctrine\\Bundle\\DoctrineBundle/Resources/views', 'Doctrine');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\nacder\\PlatformBundle/Resources/views', 'nacderPlatform');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\SiteBundle/Resources/views', 'KITJAMBONSite');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\MembreBundle/Resources/views', 'KITJAMBONMembre');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\TransfertBundle/Resources/views', 'KITJAMBONTransfert');
+        $instance->addPath('C:\\wamp\\www\\Symfony\\src\\KITJAMBON\\CommentBundle/Resources/views', 'KITJAMBONComment');
         $instance->addPath('C:/wamp/www/Symfony/app/Resources/views');
         $instance->addPath('C:\\wamp\\www\\Symfony\\vendor\\symfony\\symfony\\src\\Symfony\\Bridge\\Twig/Resources/views/Form');
         return $instance;
@@ -1057,7 +1086,7 @@ class appProdProjectContainer extends Container
     }
     protected function getUriSignerService()
     {
-        return $this->services['uri_signer'] = new \Symfony\Component\HttpKernel\UriSigner('ThisTokenIsNotSoSecretChangeIt');
+        return $this->services['uri_signer'] = new \Symfony\Component\HttpKernel\UriSigner('9279910355cf778d791bdd50b6daf2b0');
     }
     protected function getValidatorService()
     {
@@ -1130,6 +1159,19 @@ class appProdProjectContainer extends Container
     {
         return $this->services['swiftmailer.mailer.default.transport.eventdispatcher'] = new \Swift_Events_SimpleEventDispatcher();
     }
+    protected function getTemplating_Engine_PhpService()
+    {
+        $this->services['templating.engine.php'] = $instance = new \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('templating.globals'));
+        $instance->setCharset('UTF-8');
+        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.static'));
+        return $instance;
+    }
+    protected function getTemplating_Engine_TwigService()
+    {
+        $this->services['templating.engine.twig'] = $instance = new \Symfony\Bundle\TwigBundle\TwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.locator'));
+        $instance->setDefaultEscapingStrategy(array(0 => $instance, 1 => 'guessDefaultEscapingStrategy'));
+        return $instance;
+    }
     protected function getTemplating_LocatorService()
     {
         return $this->services['templating.locator'] = new \Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator($this->get('file_locator'), 'C:/wamp/www/Symfony/app/cache/prod');
@@ -1168,7 +1210,7 @@ class appProdProjectContainer extends Container
             'kernel.root_dir' => 'C:/wamp/www/Symfony/app',
             'kernel.environment' => 'prod',
             'kernel.debug' => false,
-            'kernel.name' => 'app',
+            'kernel.name' => 'ap_',
             'kernel.cache_dir' => 'C:/wamp/www/Symfony/app/cache/prod',
             'kernel.logs_dir' => 'C:/wamp/www/Symfony/app/logs',
             'kernel.bundles' => array(
@@ -1180,13 +1222,18 @@ class appProdProjectContainer extends Container
                 'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
+                'nacderPlatformBundle' => 'nacder\\PlatformBundle\\nacderPlatformBundle',
+                'KITJAMBONSiteBundle' => 'KITJAMBON\\SiteBundle\\KITJAMBONSiteBundle',
+                'KITJAMBONMembreBundle' => 'KITJAMBON\\MembreBundle\\KITJAMBONMembreBundle',
+                'KITJAMBONTransfertBundle' => 'KITJAMBON\\TransfertBundle\\KITJAMBONTransfertBundle',
+                'KITJAMBONCommentBundle' => 'KITJAMBON\\CommentBundle\\KITJAMBONCommentBundle',
             ),
             'kernel.charset' => 'UTF-8',
             'kernel.container_class' => 'appProdProjectContainer',
             'database_driver' => 'pdo_mysql',
             'database_host' => '127.0.0.1',
             'database_port' => NULL,
-            'database_name' => 'symfony',
+            'database_name' => 'symfonykitjam',
             'database_user' => 'root',
             'database_password' => NULL,
             'mailer_transport' => 'smtp',
@@ -1194,10 +1241,11 @@ class appProdProjectContainer extends Container
             'mailer_user' => NULL,
             'mailer_password' => NULL,
             'locale' => 'en',
-            'secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'secret' => '9279910355cf778d791bdd50b6daf2b0',
             'debug_toolbar' => true,
             'debug_redirects' => false,
             'use_assetic_controller' => true,
+            'database_path' => NULL,
             'controller_resolver.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver',
             'controller_name_converter.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerNameParser',
             'response_listener.class' => 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener',
@@ -1247,7 +1295,7 @@ class appProdProjectContainer extends Container
             'translation.writer.class' => 'Symfony\\Component\\Translation\\Writer\\TranslationWriter',
             'property_accessor.class' => 'Symfony\\Component\\PropertyAccess\\PropertyAccessor',
             'debug.errors_logger_listener.class' => 'Symfony\\Component\\HttpKernel\\EventListener\\ErrorsLoggerListener',
-            'kernel.secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'kernel.secret' => '9279910355cf778d791bdd50b6daf2b0',
             'kernel.http_method_override' => true,
             'kernel.trusted_hosts' => array(
             ),
@@ -1315,6 +1363,7 @@ class appProdProjectContainer extends Container
             'templating.loader.cache.path' => NULL,
             'templating.engines' => array(
                 0 => 'twig',
+                1 => 'php',
             ),
             'validator.class' => 'Symfony\\Component\\Validator\\ValidatorInterface',
             'validator.builder.class' => 'Symfony\\Component\\Validator\\ValidatorBuilderInterface',
@@ -1581,7 +1630,7 @@ class appProdProjectContainer extends Container
             'assetic.write_to' => 'C:/wamp/www/Symfony/app/../web',
             'assetic.variables' => array(
             ),
-            'assetic.java.bin' => 'C:\\Windows\\system32\\java.EXE',
+            'assetic.java.bin' => 'C:\\WINDOWS\\system32\\java.EXE',
             'assetic.node.bin' => '/usr/bin/node',
             'assetic.ruby.bin' => '/usr/bin/ruby',
             'assetic.sass.bin' => '/usr/bin/sass',

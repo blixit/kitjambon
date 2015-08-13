@@ -21,6 +21,7 @@
       <parameter key="KITJAMBONMembreBundle">KITJAMBON\MembreBundle\KITJAMBONMembreBundle</parameter>
       <parameter key="KITJAMBONTransfertBundle">KITJAMBON\TransfertBundle\KITJAMBONTransfertBundle</parameter>
       <parameter key="KITJAMBONCommentBundle">KITJAMBON\CommentBundle\KITJAMBONCommentBundle</parameter>
+      <parameter key="KJSiteBundle">KJ\SiteBundle\KJSiteBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -43,7 +44,6 @@
     <parameter key="debug_toolbar">true</parameter>
     <parameter key="debug_redirects">false</parameter>
     <parameter key="use_assetic_controller">true</parameter>
-    <parameter key="database_path">null</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
@@ -165,6 +165,7 @@
     <parameter key="templating.loader.cache.path">null</parameter>
     <parameter key="templating.engines" type="collection">
       <parameter>twig</parameter>
+      <parameter>php</parameter>
     </parameter>
     <parameter key="validator.class">Symfony\Component\Validator\ValidatorInterface</parameter>
     <parameter key="validator.builder.class">Symfony\Component\Validator\ValidatorBuilderInterface</parameter>
@@ -2239,6 +2240,24 @@
             <argument>true</argument>
           </service>
         </argument>
+        <argument key="php" type="service">
+          <service class="Assetic\Factory\Loader\CachedFormulaLoader" public="false">
+            <tag name="assetic.formula_loader" alias="php"/>
+            <tag name="assetic.templating.php"/>
+            <argument type="service">
+              <service class="Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader" public="false">
+                <tag name="assetic.templating.php"/>
+                <argument type="service" id="assetic.asset_factory"/>
+              </service>
+            </argument>
+            <argument type="service">
+              <service class="Assetic\Cache\ConfigCache" public="false">
+                <argument>C:/wamp/www/Symfony/app/cache/dev/assetic/config</argument>
+              </service>
+            </argument>
+            <argument>true</argument>
+          </service>
+        </argument>
       </argument>
       <call method="addResource">
         <argument type="service">
@@ -2252,6 +2271,19 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="service" id="templating.loader"/>
+            <argument></argument>
+            <argument>C:/wamp/www/Symfony/app/Resources/views</argument>
+            <argument>/\.[^.]+\.php$/</argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
     </service>
     <service id="assetic.asset_factory" class="Symfony\Bundle\AsseticBundle\Factory\AssetFactory" public="false">
@@ -2272,6 +2304,12 @@
     </service>
     <service id="assetic.value_supplier.default" class="Symfony\Bundle\AsseticBundle\DefaultValueSupplier" public="false">
       <argument type="service" id="service_container"/>
+    </service>
+    <service id="assetic.helper.dynamic" class="Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper">
+      <tag name="assetic.templating.php"/>
+      <tag name="templating.helper" alias="assetic"/>
+      <argument type="service" id="templating.helper.router"/>
+      <argument type="service" id="assetic.asset_factory"/>
     </service>
     <service id="assetic.filter.cssrewrite" class="Assetic\Filter\CssRewriteFilter">
       <tag name="assetic.filter" alias="cssrewrite"/>
@@ -2539,6 +2577,7 @@
       <argument type="service" id="security.authentication.trust_resolver" on-invalid="null"/>
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
     </service>
+    <service id="kitjambon_membre.arfilter" class="KITJAMBON\MembreBundle\Services\KITJAMBONARFilter"/>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
       <argument type="service" id="twig.loader"/>
@@ -2804,16 +2843,14 @@
         </argument>
       </call>
     </service>
-    <service id="templating" class="Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine">
-      <argument type="service" id="twig"/>
-      <argument type="service" id="templating.name_parser"/>
-      <argument type="service" id="templating.locator"/>
-      <argument type="service" id="debug.stopwatch"/>
-      <call method="setDefaultEscapingStrategy">
-        <argument type="collection">
-          <argument type="service" id="templating"/>
-          <argument>guessDefaultEscapingStrategy</argument>
-        </argument>
+    <service id="templating" class="Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine">
+      <argument type="service" id="service_container"/>
+      <argument type="collection"/>
+      <call method="addEngine">
+        <argument type="service" id="debug.templating.engine.twig"/>
+      </call>
+      <call method="addEngine">
+        <argument type="service" id="debug.templating.engine.php"/>
       </call>
     </service>
     <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
@@ -2898,6 +2935,10 @@
         <argument>KITJAMBONComment</argument>
       </call>
       <call method="addPath">
+        <argument>C:\wamp\www\Symfony\src\KJ\SiteBundle/Resources/views</argument>
+        <argument>KJSite</argument>
+      </call>
+      <call method="addPath">
         <argument>C:\wamp\www\Symfony\src\Acme\DemoBundle/Resources/views</argument>
         <argument>AcmeDemo</argument>
       </call>
@@ -2914,6 +2955,18 @@
       </call>
       <call method="addPath">
         <argument>C:\wamp\www\Symfony\vendor\symfony\symfony\src\Symfony\Bridge\Twig/Resources/views/Form</argument>
+      </call>
+    </service>
+    <service id="debug.templating.engine.twig" class="Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine">
+      <argument type="service" id="twig"/>
+      <argument type="service" id="templating.name_parser"/>
+      <argument type="service" id="templating.locator"/>
+      <argument type="service" id="debug.stopwatch"/>
+      <call method="setDefaultEscapingStrategy">
+        <argument type="collection">
+          <argument type="service" id="debug.templating.engine.twig"/>
+          <argument>guessDefaultEscapingStrategy</argument>
+        </argument>
       </call>
     </service>
     <service id="logger" class="Symfony\Bridge\Monolog\Logger">
@@ -2983,7 +3036,6 @@
     </service>
     <service id="event_dispatcher" alias="debug.event_dispatcher"/>
     <service id="session.storage" alias="session.storage.native"/>
-    <service id="debug.templating.engine.twig" alias="templating"/>
     <service id="swiftmailer.spool" alias="swiftmailer.mailer.default.spool"/>
     <service id="swiftmailer.transport.real" alias="swiftmailer.mailer.default.transport.real"/>
     <service id="swiftmailer.plugin.messagelogger" alias="swiftmailer.mailer.default.plugin.messagelogger"/>

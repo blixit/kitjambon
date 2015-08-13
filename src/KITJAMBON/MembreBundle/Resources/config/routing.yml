@@ -1,3 +1,30 @@
 kitjambon_membre_homepage:
-    path:     /hello/{name}
+    path:     /test/{name}
     defaults: { _controller: KITJAMBONMembreBundle:Default:index }
+kitjambon_membre_account_restreint:
+    path:     /membre/restricted
+    defaults: { _controller: KITJAMBONMembreBundle:Account:restricted }
+kitjambon_membre_account_adblockrestreint:
+    path:     /adblockRestricted
+    defaults: { _controller: KITJAMBONMembreBundle:Account:adblockRestricted }
+kitjambon_membre_membre_view:
+    path:     /membre/view/{id}
+    defaults: { _controller: KITJAMBONMembreBundle:Membre:view }
+    requirements:
+        id: \d+
+kitjambon_membre_membre_profil:
+    path:     /membre/profil/{id}
+    defaults: { _controller: KITJAMBONMembreBundle:Membre:profil }
+    requirements:
+        id: \d+
+kitjambon_membre_membre_liste:
+    path:     /membre/liste/{page}
+    defaults: { _controller: KITJAMBONMembreBundle:Membre:liste, page:1,eix:1 }
+    requirements:
+        page: \d+ 
+kitjambon_membre_membre_liste2:
+    path:     /membre/liste/{page}/{eix}
+    defaults: { _controller: KITJAMBONMembreBundle:Membre:liste, page:1,eix:1 }
+    requirements:
+        page: \d+
+        eix: \d{1}

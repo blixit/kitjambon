@@ -1,3 +1,7 @@
+kj_site:
+    resource: "@KJSiteBundle/Resources/config/routing.yml"
+    prefix:   /Symfony/
+
 kitjambon_comment:
     resource: "@KITJAMBONCommentBundle/Resources/config/routing.yml"
     prefix:   /

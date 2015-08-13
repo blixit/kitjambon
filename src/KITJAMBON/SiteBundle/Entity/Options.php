@@ -39,9 +39,9 @@ class Options
     /**
      * @var string
      *
-     * @ORM\Column(name="option_module_long", type="string", length=255)
+     * @ORM\Column(name="option_abrege", type="string", length=255)
      */
-    private $optionModuleLong;
+    private $optionAbrege;
 
     /**
      * @var integer
@@ -120,26 +120,26 @@ class Options
     }
 
     /**
-     * Set optionModuleLong
+     * Set optionAbrege
      *
-     * @param string $optionModuleLong
+     * @param string $optionAbrege
      * @return Options
      */
-    public function setOptionModuleLong($optionModuleLong)
+    public function setOptionAbrege($optionAbrege)
     {
-        $this->optionModuleLong = $optionModuleLong;
+        $this->optionAbrege = $optionAbrege;
 
         return $this;
     }
 
     /**
-     * Get optionModuleLong
+     * Get optionAbrege
      *
      * @return string 
      */
-    public function getOptionModuleLong()
+    public function getOptionAbrege()
     {
-        return $this->optionModuleLong;
+        return $this->optionAbrege;
     }
 
     /**

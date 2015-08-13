@@ -22,19 +22,16 @@ class __TwigTemplate_f3fb8acfa90298c957a3bcb7a22124bc3d47dcb2b1da6a0050622ed972a
         <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
         <title>An Error Occurred: ";
         // line 5
-        if (isset($context["status_text"])) { $_status_text_ = $context["status_text"]; } else { $_status_text_ = null; }
-        echo twig_escape_filter($this->env, $_status_text_, "html", null, true);
+        echo twig_escape_filter($this->env, (isset($context["status_text"]) ? $context["status_text"] : null), "html", null, true);
         echo "</title>
     </head>
     <body>
         <h1>Oops! An Error Occurred</h1>
         <h2>The server returned a \"";
         // line 9
-        if (isset($context["status_code"])) { $_status_code_ = $context["status_code"]; } else { $_status_code_ = null; }
-        echo twig_escape_filter($this->env, $_status_code_, "html", null, true);
+        echo twig_escape_filter($this->env, (isset($context["status_code"]) ? $context["status_code"] : null), "html", null, true);
         echo " ";
-        if (isset($context["status_text"])) { $_status_text_ = $context["status_text"]; } else { $_status_text_ = null; }
-        echo twig_escape_filter($this->env, $_status_text_, "html", null, true);
+        echo twig_escape_filter($this->env, (isset($context["status_text"]) ? $context["status_text"] : null), "html", null, true);
         echo "\".</h2>
 
         <div>
@@ -59,6 +56,6 @@ class __TwigTemplate_f3fb8acfa90298c957a3bcb7a22124bc3d47dcb2b1da6a0050622ed972a
 
     public function getDebugInfo()
     {
-        return array (  33 => 9,  25 => 5,  19 => 1,);
+        return array (  32 => 9,  25 => 5,  22 => 2,  19 => 1,  209 => 82,  203 => 78,  199 => 76,  193 => 73,  189 => 71,  187 => 70,  182 => 68,  176 => 64,  173 => 63,  168 => 62,  164 => 60,  162 => 59,  154 => 54,  149 => 51,  147 => 50,  144 => 49,  141 => 48,  133 => 42,  130 => 41,  125 => 38,  122 => 37,  116 => 36,  112 => 35,  109 => 34,  106 => 33,  103 => 32,  99 => 30,  95 => 28,  92 => 27,  86 => 24,  82 => 22,  80 => 21,  73 => 19,  64 => 15,  60 => 13,  57 => 12,  54 => 11,  51 => 10,  48 => 9,  45 => 8,  42 => 7,  39 => 6,  36 => 5,  33 => 4,  30 => 3,);
     }
 }

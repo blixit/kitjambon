@@ -1,0 +1,71 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+
+.btn-circle {
+  min-width: 30px;
+  min-height: 30px;
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 100%;
+}
+.btn-circle.btn-lg {
+  min-width: 50px;
+  min-height: 50px;
+  padding: 5px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 100%;
+}
+.btn-circle.btn-xl {
+  min-width: 150px;
+  min-height: 150px;
+  padding: 5px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 100%;
+}
+
+/*[class*="col-"], footer {
+  background-color: lightgreen;
+  border: 2px solid black;
+  border-radius: 6px;
+  line-height: 40px;
+  text-align: center;
+}*/
+.panel{
+	border: 0;
+}
+.panel-title{
+	text-align: center;
+}
+.panel-body{
+	text-align: justify;
+} 
+.centered{
+	text-align: center;
+}
+.rounded{
+	border-radius: 100%;
+}
+.site_description{
+	font-size: 18px;
+	color: brown;
+}
+.my-icon-xs{ font-size: 10px;}
+.my-icon-sm{ font-size: 20px;}
+.my-icon-md{ font-size: 50px;}
+.my-icon-lg{ font-size: 80px;}
+.my-icon-xl{ font-size: 100px;}
+.my-icon-monster{ font-size: 300px;}
+
+.my-delete:hover{
+	color: red;
+}

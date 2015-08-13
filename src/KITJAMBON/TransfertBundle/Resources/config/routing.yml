@@ -1,3 +1,12 @@
-kitjambon_transfert_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: KITJAMBONTransfertBundle:Default:index }
+#page d'accueil de chaque répertoire
+kitjambon_transfert_download_view:
+    path:     /download/view/{eix}/{abrege}
+    defaults: { _controller: KITJAMBONTransfertBundle:Download:view }
+    requirements:
+        eix: \d{1}
+#répertoire sous le répertoire racine d'une option
+kitjambon_transfert_download_view2:
+    path:     /download/view/{eix}/{abrege}/{dir}
+    defaults: { _controller: KITJAMBONTransfertBundle:Download:view }
+    requirements:
+        eix: \d{1}

@@ -12,4 +12,60 @@ use Doctrine\ORM\EntityRepository;
  */
 class OptionsRepository extends EntityRepository
 {
+	/**
+	*	Récupère la liste modules triés par année, option puis par nom de module
+	*/
+	public function getOrderedModules(){ 
+
+	    $queryBuilder = $this->createQueryBuilder('o');
+
+	    $queryBuilder->orderBy('o.optionAnnee,o.optionNom,o.optionModule');
+
+	    // On récupère la Query à partir du QueryBuilder
+	    $query = $queryBuilder->getQuery();
+
+	    // On récupère les résultats à partir de la Query
+	    $results = $query->getResult();
+
+	    // On retourne ces résultats
+	    return $results;
+	}
+	/**
+	*	Récupère les modules de l'année donnée en paramètre(triés par année, option puis par nom de module)
+	*   @param annee l'année qui sert de critère de selection
+	*/
+	public function getOrderedModulesByAnnee($annee){  
+	    // On récupère la Query à partir de l'em
+	    $query = $this->_em->createQuery('SELECT o FROM KITJAMBONSiteBundle:Options o WHERE o.optionAnnee=:annee ORDER BY o.optionAnnee,o.optionNom,o.optionModule ');
+    	
+    	$query->setParameter('annee',intval($annee));  
+
+	    // On récupère les résultats à partir de la Query
+	    $results = $query->getResult();
+
+	    // On retourne ces résultats
+	    return $results;
+	}
+
+	/**
+	*	Récupère la liste des promos (2 en l'occurence : 1 pour EI1 et 2 pour EI2)
+	*/
+	public function getListeAnnee(){
+		$query = $this->_em->createQuery('SELECT DISTINCT o.optionAnnee FROM KITJAMBONSiteBundle:Options o');
+    
+  		return $query->getResult();	
+	}
+
+	/**
+	*	Récupère la liste des options de l'année donnée en paramètre
+	*/
+	public function getListeOptionsByAnnee($annee){
+		// On récupère la Query à partir de l'em 
+		$query = $this->_em->createQuery('SELECT DISTINCT o.optionNom FROM KITJAMBONSiteBundle:Options o WHERE o.optionAnnee=:annee ');
+    	
+    	$query->setParameter('annee',intval($annee)); 
+  		
+  		return $query->getResult();	
+	}
+
 }

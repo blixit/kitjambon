@@ -1,0 +1,2 @@
+//CONTOURNER ADBLOCS
+document.write('<div id="ads_bottom" style="display: none; width: 100px; height: 100px;"></div>');
